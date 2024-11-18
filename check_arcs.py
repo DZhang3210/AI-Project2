@@ -40,26 +40,29 @@ def double_arc_consistency(matrix, double, i, j, value, domain):
 def dup_arc_consistency(matrix, dup, i, j, value, domain):
     dup_domain = dup[(i, j)]
     for (v_i, v_j) in dup_domain:
-        if matrix[v_i][v_j] != 0 and matrix[v_i][v_j] == value:
-            return False
+        if matrix[v_i][v_j] != 0:
+            if matrix[v_i][v_j] == value:
+                return None
         else:
-            for domain_value in domain[(v_i, v_j)]:
-                if domain_value == value:
-                    domain[(v_i, v_j)].remove(domain_value)
-            if len(domain[(v_i, v_j)]) == 0:
-                return False
-    return True
+            if value in domain[(v_i, v_j)]:
+                domain[(v_i, v_j)].remove(value)
+                if len(domain[(v_i, v_j)]) == 0:
+                    return None
+    return domain
 
 
 #If it checks both one_arc_consistency and double_arc_consistency, if any of them returns None, it means that the domain is not consistent, and you should return None, which means to not update the domain, and instead try a new value
 def check_arcs(matrix, domain, one, double, dup, i, j, value):
     domain = one_arc_consistency(matrix, one, i, j, value, domain)
+    print("One Arc Consistency:")
     if domain == None:
         return None
     domain = double_arc_consistency(matrix, double, i, j, value, domain)
+    print("Double Arc Consistency:")
     if domain == None:
         return None
     domain = dup_arc_consistency(matrix, dup, i, j, value, domain)
-    if domain == False:
+    print("Dup Arc Consistency:")
+    if domain == None:
         return None
     return domain    
