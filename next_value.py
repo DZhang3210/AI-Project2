@@ -1,4 +1,7 @@
 def next_value(domain, one, double, dup, valid_values):
+    if not valid_values:
+        return None
+        
     min_mrv = float('inf')
     min_degree = float('-inf')
     min_current = None
