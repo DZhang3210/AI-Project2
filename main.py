@@ -20,7 +20,10 @@ def main():
     # print("Domain:")
     # print(domain)
 
-    res = backtrack_step(matrix, domain, one, double, dup, valid_values)
+    res = backtrack_step(matrix, domain, one, double, dup, 
+    valid_values)
+
+ 
     print("Result:")
     print(res)
 

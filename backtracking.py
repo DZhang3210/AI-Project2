@@ -11,6 +11,8 @@ def backtrack_step(matrix, domain, one, double, dup, valid_values):
         return matrix
     
     (i, j) = next_value(domain, one, double, dup, valid_values)
+    if (i, j) == None:
+        return matrix
     # print("(i, j):")
     print((i, j))
     
@@ -26,24 +28,31 @@ def backtrack_step(matrix, domain, one, double, dup, valid_values):
         print("Value:")
         print(value)
         #Store a copy of the domain and the new domain after forward checking
-        domain_copy = {k: list(v) for k, v in domain.items()}
-        new_domain = check_arcs(matrix, domain, one, double, dup, i, j, value)
-        if new_domain:
-            domain = new_domain
-            matrix[i][j] = value
+        
 
+        domain_copy = {k: list(v) for k, v in domain.items()}
+        domain_copy = check_arcs(matrix, domain_copy, one, double, dup, i, j, value)
+        #None or a new domain
+
+        if domain_copy:
+            
+            # prev_domain = deepcopy(domain[(i, j)])
+            
             #Store a copy of the domain before updating the domain
-            prev_domain = deepcopy(domain[(i, j)])
-            domain[(i, j)] = [value]
+
+            matrix[i][j] = value
+            domain_copy[(i, j)] = [value]
            
             result = backtrack_step(matrix, domain_copy, one, double, dup, valid_values)
 
             if result:
                 print("Found result")
                 return result
+            
             matrix[i][j] = 0
-            domain[(i, j)] = prev_domain
-            domain = domain_copy
+            # domain[(i, j)] = prev_domain
+            # domain = domain_copy
+       
     valid_values.add((i, j))
     print("Ran out of values")
     return None

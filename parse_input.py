@@ -38,6 +38,8 @@ def parse_input(file_path):
                     domain[(i, j)] = [1, 2, 3, 4, 5, 6, 7, 8, 9]
                     valid_values.add((i, j))
 
+        
+ 
         one_arcs = defaultdict(list)
         double_arcs = defaultdict(list)
         dup_arcs = defaultdict(list)
