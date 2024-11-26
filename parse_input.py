@@ -46,7 +46,6 @@ def parse_input(file_path):
         for i in range(9):
             for j in range(9):
                 dup_arcs[(i, j)].extend(square_items(i, j))
-                # print((i, j), "Square items:", dup_arcs[(i, j)])
                 dup_arcs[(i, j)].extend(row_items(i, j))
                 dup_arcs[(i, j)].extend(column_items(i, j))
 
