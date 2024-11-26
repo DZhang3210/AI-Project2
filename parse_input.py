@@ -3,7 +3,7 @@ from collections import defaultdict
 def square_items(c_i, c_j):
     x = c_i//3
     y = c_j//3
-    return [(i, j) for i in range(x, x+3) for j in range(y, y+3) if (i != c_i and j != c_j)]
+    return [(i, j) for i in range(x*3, x*3+3) for j in range(y*3, y*3+3) if not (i == c_i and j == c_j)]
 def row_items(c_i, c_j):
     return [(i, c_j) for i in range(9) if i != c_i]
 def column_items(c_i, c_j):
@@ -46,6 +46,7 @@ def parse_input(file_path):
         for i in range(9):
             for j in range(9):
                 dup_arcs[(i, j)].extend(square_items(i, j))
+                # print((i, j), "Square items:", dup_arcs[(i, j)])
                 dup_arcs[(i, j)].extend(row_items(i, j))
                 dup_arcs[(i, j)].extend(column_items(i, j))
 

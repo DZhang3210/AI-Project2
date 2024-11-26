@@ -15,6 +15,10 @@ def one_arc_consistency(matrix, one, i, j, value, domain):
                           if abs(v - value) == 1]
             if not valid_values:
                 return None
+            
+            # if (v_i, v_j) == (4,3) and domain[(v_i, v_j)] != valid_values:
+            #     print("One arc consistency values:", valid_values)
+            
             domain[(v_i, v_j)] = valid_values
     return domain
 
@@ -32,12 +36,16 @@ def double_arc_consistency(matrix, double, i, j, value, domain):
             valid_values = [v for v in domain[(v_i, v_j)]
                           if max(v, value) == min(v, value) * 2]
             if not valid_values:
+                # print("Failed double arc consistency", (v_i, v_j))
                 return None
+            # if (v_i, v_j) == (4,3) and domain[(v_i, v_j)] != valid_values:
+            #     print("Double arc consistency values:", valid_values)
             domain[(v_i, v_j)] = valid_values
     return domain
 
 def dup_arc_consistency(matrix, dup, i, j, value, domain):
     dup_domain = dup[(i, j)]
+    # print("Dup domain:", dup_domain)
     for (v_i, v_j) in dup_domain:
         if matrix[v_i][v_j] != 0:
             if matrix[v_i][v_j] == value:
@@ -47,6 +55,8 @@ def dup_arc_consistency(matrix, dup, i, j, value, domain):
                 domain[(v_i, v_j)].remove(value)
                 if len(domain[(v_i, v_j)]) == 0:
                     return None
+            # if (v_i, v_j) == (4,3) and domain[(v_i, v_j)]:
+            #     print((i, j),"Dup arc consistency values:", domain[(v_i, v_j)])
     return domain
 
 from copy import deepcopy
@@ -58,11 +68,14 @@ def check_arcs(matrix, domain, one, double, dup, i, j, value):
     copy_domain = deepcopy(domain)
     copy_domain = one_arc_consistency(matrix, one, i, j, value, copy_domain)
     if copy_domain == None:
+        # print("Failed one arc consistency")
         return None
     copy_domain = double_arc_consistency(matrix, double, i, j, value, copy_domain)
     if copy_domain == None:
+        # print("Failed double arc consistency")
         return None
     copy_domain = dup_arc_consistency(matrix, dup, i, j, value, copy_domain)
     if copy_domain == None:
+        # print("Failed dup arc consistency")
         return None
     return copy_domain    
