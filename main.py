@@ -4,7 +4,7 @@ from parse_input import parse_input
 
 
 def main():
-    matrix, initial_values, domain, one, double, dup, valid_values = parse_input("inputs/Sample_Input.txt")
+    matrix, initial_values, domain, one, double, dup, valid_values = parse_input("inputs/input3.txt")
 
     res = backtrack_step(matrix, domain, one, double, dup, 
     valid_values)
@@ -14,7 +14,7 @@ def main():
     
     # Write result to output file
     if res:
-        with open("outputs/output.txt", "w") as f:
+        with open("outputs/output3.txt", "w") as f:
             for i in range(9):
                 row = " ".join(str(res[i][j]) for j in range(9))
                 f.write(row + "\n")
