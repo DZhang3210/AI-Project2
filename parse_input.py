@@ -15,7 +15,6 @@ def parse_input(file_path):
     matrix = [[0 for _ in range(9)] for _ in range(9)]
     with open(file_path, 'r') as file:
         lines = file.readlines()
-        initial_values = []
         domain = defaultdict(list)
         valid_values = set()
 
@@ -33,7 +32,6 @@ def parse_input(file_path):
                 if value != 0:
                     matrix[i][j] = value
                     domain[(i, j)].append(value)
-                    initial_values.append(([i, j], value))
                 else:
                     domain[(i, j)] = [1, 2, 3, 4, 5, 6, 7, 8, 9]
                     valid_values.add((i, j))
@@ -101,7 +99,7 @@ def parse_input(file_path):
         dup_arcs: Dict of coordinates that can't have duplicate values
         valid_values: Set of coordinates that can be modified
     """
-    return matrix, initial_values, domain, one_arcs, double_arcs, dup_arcs, valid_values
+    return matrix, domain, one_arcs, double_arcs, dup_arcs, valid_values
 
 #Return values
 
